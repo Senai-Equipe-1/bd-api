@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {cors:true});
   await app.listen(process.env.PORT);
   const config = new DocumentBuilder ()
     .setTitle ('Todolist - Api Docs')
@@ -14,5 +14,14 @@ async function bootstrap() {
     .build();
     const document= SwaggerModule.createDocument(app, config);
       SwaggerModule.setup('api', app, document)
+      app.enableCors({
+        origin: "*",
+        methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPITIONS",
+        preflightContinue: false,
+        optionsSuccessStatus: 204,
+        credentials: true
+      });
 }
-bootstrap();
+bootstrap()
+  
+  

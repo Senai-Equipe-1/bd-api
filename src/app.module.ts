@@ -5,7 +5,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
-import { AuthModule } from './@nes-clit/auth/auth.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
@@ -19,7 +18,7 @@ import { AuthModule } from './auth/auth.module';
     password: 'postgres',
     database: 'postgres',
     entities: [],
-    synchronize: true,
+    synchronize: false,
     autoLoadEntities: true,
     }),
   UserModule,

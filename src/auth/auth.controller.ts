@@ -11,11 +11,14 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {
 
   }
+
   
-  @Get('code:code')
+  
+  @Get('code/:code')
   async getUserDataFromGoogle(@Param('code') code:string, @Res() res:Response){
 
     const result = await this.authService.getUserDataFromGoogle(code);
+    
     
 
     const user = new UserEntity();
