@@ -2,7 +2,7 @@ import { Controller, Get, Param, Res } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { AuthService } from './auth.service';
-import express, { Request, Response } from "express";
+import { Response } from "express";
 
 
 @Controller('auth')
