@@ -6,40 +6,45 @@ import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class AuthService {
-        constructor(
-            private readonly userService: UserService,
-            private jwtService: JwtService
-        ){
+    constructor(
+        private readonly userService: UserService,
+        private jwtService: JwtService
+    ) {
 
-        }
-        generateJwt(payload){
-            return this.jwtService.sign(payload, {secret:process.env.JWT_SECRET});
-        }
+    }
+    generateJwt(payload) {
+        return this.jwtService.sign(payload, { secret: process.env.JWT_SECRET });
+    }
 
-    async getUserDataFromGoogle(code:string){
+    async getUserDataFromGoogle(code: string) {
 
-        const result = await fetch (`${process.env.GOOGLE_PROFILE_URL}${code}`);
-        
+        const result = await fetch(`${process.env.GOOGLE_PROFILE_URL}${code}`);
+
         return await result.json();
 
 
     }
 
 
-    async singIn(user: UserEntity){
-        const registeredUser = await this.userService.findOneByEmail(user.email);
-        if(registeredUser ){
-            return this.generateJwt(JSON.parse(JSON.stringify (registeredUser)));
+    async singIn(user: UserEntity) {
 
-        }else{
-            const newUser = await this.signUp(user);
-            return this.generateJwt(JSON.parse(JSON.stringify(newUser)));
+        var userLocal: UserEntity;
+        var token = '',
 
-        }
+            userLocal = await this.userService.findOneByEmail(user.email);
+        if (!userLocal) {
+            userLocal = await this.signUp(user);
+
+        } 
+        
+        token = JSON.parse(JSON.stringify(userLocal));
+        token['exp'] = new Date().getUTCDate() + 1;
+        return this.generateJwt(token);
+
     }
-    async signUp (user: UserEntity) : Promise<UserEntity>{
+    async signUp(user: UserEntity): Promise<UserEntity> {
         const newUser = await this.userService.create(user);
         return newUser;
     }
-    
+
 }
