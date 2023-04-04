@@ -1,4 +1,5 @@
-import { PrimaryGeneratedColumn, Column, Entity } from "typeorm";
+import { TaskEntity } from "src/task/entities/task.entity";
+import { PrimaryGeneratedColumn, Column, Entity, OneToMany } from "typeorm";
 
 @Entity()
 export class UserEntity{
@@ -20,4 +21,7 @@ export class UserEntity{
 
     @Column()
     profilePictureUrl: string;
+
+    @OneToMany(() => TaskEntity, (task) => task.user)
+    tasks: TaskEntity[];
 }
