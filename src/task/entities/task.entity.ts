@@ -1,5 +1,5 @@
 import { UserEntity } from "src/user/entities/user.entity";
-import { PrimaryGeneratedColumn, Column, Entity, ManyToOne } from "typeorm";
+import { PrimaryGeneratedColumn, Column, Entity, ManyToOne} from "typeorm";
 
 @Entity()
 
@@ -15,7 +15,7 @@ export class TaskEntity {
     description: string;
 
     @Column()
-    creationDate: string; 
+    creationDate: number; 
 
     @Column()
     status: Boolean;
