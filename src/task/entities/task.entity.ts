@@ -9,12 +9,9 @@ export class TaskEntity {
     id: number;
 
     @Column()
-    title: string;
-
-    @Column()
     description: string;
 
-    @Column()
+    @Column({type:"bigint"})
     creationDate: number; 
 
     @Column()

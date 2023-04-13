@@ -11,8 +11,8 @@ export class TaskService {
 
   constructor(
     @InjectRepository(TaskEntity)
-    private taskReposity : Repository<TaskEntity>  ){}
-  
+    private taskReposity: Repository<TaskEntity>) { }
+
   create(createTaskDto: CreateTaskDto) {
     return this.taskReposity.save(createTaskDto);
   }
@@ -20,9 +20,12 @@ export class TaskService {
   findAll() {
     return this.taskReposity.find();
   }
+  findAllByUser(id: string) {
+    return this.taskReposity.find({ where: { user: { id: Number.parseInt(id) } } });
+  }
 
   findOne(id: number) {
-     return this.taskReposity.findOneBy({id});
+    return this.taskReposity.findOneBy({ id });
   }
 
   update(id: number, updateTaskDto: UpdateTaskDto) {
